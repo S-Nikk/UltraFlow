@@ -1,0 +1,63 @@
+{
+  "name": "Ultraflow Integration",
+  "version": "1.0.0",
+  "description": "Integrated AI toolset: Brain memory + OpenCode delegation + Claude Flow orchestration",
+  "type": "integration",
+  "manifest_version": "1.0",
+  "
+components": {
+    "brain": {
+      "type": "mcp-server",
+      "enabled": true,
+      "description": "Brain memory system with vault",
+      "tools": [
+        "search_memories",
+        "get_memory",
+        "list_memories",
+        "refresh_index"
+      ]
+    },
+    "opencode": {
+      "type": "delegation",
+      "enabled": {{#if (includes features 'OpenCode delegation')}}true{{else}}false{{/if}},
+      "description": "Code generation and refactoring delegation",
+      "capabilities": [
+        "code-generation",
+        "refactoring",
+        "test-writing",
+        "optimization"
+      ]
+    },
+    "claude-flow": {
+      "type": "orchestration",
+      "enabled": {{#if (includes features 'Claude Flow orchestration')}}true{{else}}false{{/if}},
+      "description": "Multi-agent orchestration framework",
+      "tools": [
+        "swarm-init",
+        "swarm-add-agent",
+        "memory-store"
+      ]
+    }
+  },
+  "hooks": {
+    "session_start": true,
+    "user_prompt_submit": true,
+    "post_tool_use": true
+  },
+  "configuration": {
+    "memory_path": ".claude/memory",
+    "config_path": ".openclaw",
+    "auto_save": true,
+    "cache_ttl": 3600
+  },
+  "supported_ais": [
+    {{#each aiSystems}}
+    "{{this}}"{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "enabled_features": [
+    {{#each features}}
+    "{{this}}"{{#unless @last}},{{/unless}}
+    {{/each}}
+  ]
+}

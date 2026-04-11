@@ -1,0 +1,46 @@
+{
+  "type": "module",
+  "mcpServers": {
+    "brain": {
+      "command": "node",
+      "args": [
+        "{{brainServerPath}}"
+      ],
+      "env": {
+        "BRAIN_MEMORY_PATH": ".claude/memory",
+        "NODE_ENV": "production"
+      }
+    }{{#if (includes features 'Claude Flow orchestration')}},
+    "claude-flow": {
+      "command": "npx",
+      "args": [
+        "@claude-flow/cli@latest",
+        "mcp"
+      ]
+    }{{/if}}
+  },
+  "hooks": {
+    "SessionStart": {
+      "command": "node",
+      "args": [
+        "{{sessionInitPath}}"
+      ],
+      "description": "Auto-load relevant memories at session start"
+    },
+    "UserPromptSubmit": {
+      "command": "node",
+      "args": [
+        "{{detectContextPath}}",
+        "{{{userPrompt}}}"
+      ],
+      "description": "Detect context references and suggest memories"
+    },
+    "PostToolUse": {
+      "command": "node",
+      "args": [
+        "{{autoSaveContextPath}}"
+      ],
+      "description": "Auto-save session context to brain vault"
+    }
+  }
+}
