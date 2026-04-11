@@ -1,0 +1,14 @@
+{
+  "name": "@brain/mcp-memory-server",
+  "version": "1.0.0",
+  "description": "MCP server for intelligent memory discovery and retrieval",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "@anthropic-sdk/sdk": "latest"
+  }
+}
