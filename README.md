@@ -545,3 +545,15 @@ MIT © S-Nikk
 ```bash
 npm install ultraflow && npx ultraflow init && npx ultraflow start
 ```
+
+---
+
+## 🙏 Acknowledgments
+
+Ultraflow builds on top of exceptional open source projects:
+
+- **[GitNexus](https://github.com/abhigyanpatwari/GitNexus)** — Code intelligence & execution flow analysis
+- **[Ruflo](https://github.com/ruvnet/ruflo)** — Multi-agent orchestration framework
+- **[OpenCode](https://github.com/anomalyco/opencode)** — Open source AI model routing & delegation
+
+These projects power Ultraflow's ability to understand code, coordinate agents, and reduce costs through intelligent task routing.

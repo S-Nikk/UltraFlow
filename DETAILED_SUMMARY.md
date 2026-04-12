@@ -588,3 +588,15 @@ npx ultraflow init
 npx ultraflow start
 # Dashboard at http://localhost:3000
 ```
+
+---
+
+## 🙏 Acknowledgments
+
+Ultraflow is built on top of these exceptional open source projects:
+
+- **[GitNexus](https://github.com/abhigyanpatwari/GitNexus)** — Code intelligence, execution flow analysis, and impact assessment
+- **[Ruflo](https://github.com/ruvnet/ruflo)** — Multi-agent AI orchestration framework for coordinated agent workflows
+- **[OpenCode](https://github.com/anomalyco/opencode)** — Open source AI model routing and intelligent task delegation
+
+These foundational projects enable Ultraflow to provide code understanding, agent coordination, and cost-effective task routing.
