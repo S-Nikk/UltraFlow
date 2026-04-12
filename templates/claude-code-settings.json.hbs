@@ -10,20 +10,38 @@
     }
   },
   "hooks": {
-    "SessionStart": {
-      "command": "node",
-      "args": ["{{ultraflowPath}}/hooks/claude-code/SessionStart.js"],
-      "description": "Auto-load context and start dashboard"
-    },
-    "SessionEnd": {
-      "command": "node",
-      "args": ["{{ultraflowPath}}/hooks/claude-code/SessionEnd.js"],
-      "description": "Save checkpoint and cleanup"
-    },
-    "PostToolUse": {
-      "command": "node",
-      "args": ["{{ultraflowPath}}/hooks/claude-code/PostToolUse.js"],
-      "description": "Log agent usage"
-    }
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"{{ultraflowPath}}/hooks/claude-code/SessionStart.js\""
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"{{ultraflowPath}}/hooks/claude-code/SessionEnd.js\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"{{ultraflowPath}}/hooks/claude-code/PostToolUse.js\""
+          }
+        ]
+      }
+    ]
   }
 }
