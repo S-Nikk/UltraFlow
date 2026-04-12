@@ -1,0 +1,15 @@
+{
+  "version": "1.2.0",
+  "name": "Lyra",
+  "description": "AI prompt optimization engine using 4-D methodology",
+  "defaults": {
+    "mode": "auto",
+    "platform": "auto"
+  },
+  "autoOptimize": true,
+  "integration": {
+    "brainServer": true,
+    "tokenDashboard": true,
+    "ruflo": true
+  }
+}

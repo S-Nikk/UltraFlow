@@ -1,0 +1,26 @@
+{
+  "source": "sample",
+  "totalTokens": 1250000,
+  "totalCost": "4.85",
+  "daily": [
+    { "date": "2026-04-06", "tokens": 150000 },
+    { "date": "2026-04-07", "tokens": 185000 },
+    { "date": "2026-04-08", "tokens": 220000 },
+    { "date": "2026-04-09", "tokens": 175000 },
+    { "date": "2026-04-10", "tokens": 200000 },
+    { "date": "2026-04-11", "tokens": 160000 },
+    { "date": "2026-04-12", "tokens": 180000 }
+  ],
+  "byModel": [
+    { "model": "claude-3-sonnet", "tokens": 800000 },
+    { "model": "claude-3-opus", "tokens": 350000 },
+    { "model": "claude-3-haiku", "tokens": 100000 }
+  ],
+  "recent": [
+    { "date": "2026-04-12", "tokens": 45000, "model": "claude-3-sonnet" },
+    { "date": "2026-04-12", "tokens": 32000, "model": "claude-3-sonnet" },
+    { "date": "2026-04-11", "tokens": 58000, "model": "claude-3-opus" },
+    { "date": "2026-04-11", "tokens": 21000, "model": "claude-3-haiku" },
+    { "date": "2026-04-10", "tokens": 45000, "model": "claude-3-sonnet" }
+  ]
+}
