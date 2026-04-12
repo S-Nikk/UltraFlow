@@ -3,7 +3,7 @@
 > **Persistent brain memory + token tracking for AI coding agents**  
 > Works seamlessly with Claude Code, OpenCode, Codex, and OpenClaw
 
-[![npm](https://img.shields.io/npm/v/@s-nikk/ultraflow)](https://www.npmjs.com/package/@s-nikk/ultraflow)
+[![npm](https://img.shields.io/npm/v/@s-nikk/ultraflow)](https://github.com/S-Nikk/UltraFlow/pkgs/npm/ultraflow)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
 
@@ -26,7 +26,7 @@ Ultraflow is your AI agent's **nervous system**—a persistent memory layer that
 
 ```bash
 # Install
-npm install ultraflow
+npm install @s-nikk/ultraflow
 
 # Initialize (auto-detects your agent)
 npx ultraflow init
