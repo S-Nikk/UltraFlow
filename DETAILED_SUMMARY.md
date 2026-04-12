@@ -11,7 +11,7 @@ Think of it as:
 - **A multi-agent orchestrator** that coordinates work across different AI platforms
 - **An MCP server** exposing 17 specialized tools for memory, checkpointing, and reporting
 
-**Current Version:** 1.2.9
+**Current Version:** 1.3.1
 
 **Core Package:** `@s-nikk/ultraflow` (MIT License)
 
@@ -21,7 +21,7 @@ Think of it as:
 
 ### 1. **Brain Memory System (MCP Server)**
 
-Ultraflow provides 17 specialized tools organized into 5 categories:
+Ultraflow provides 18 specialized tools organized into 6 categories:
 
 #### Memory Tools (5 tools)
 - `search_memories` — Find memories by keyword or semantic query
@@ -49,6 +49,9 @@ Ultraflow provides 17 specialized tools organized into 5 categories:
 - `generate_session_report` — Create detailed cost breakdown report
 - `get_agent_usage_log` — View all agent dispatch logs with timestamps
 - `get_agent_usage_summary` — Aggregate usage by model (Haiku, Sonnet, Opus, etc.)
+
+#### Learning & Analysis (1 tool)
+- Additional tools for context analysis and optimization
 
 ### 2. **Token Dashboard**
 
@@ -360,23 +363,44 @@ const summary = await mcp.call('brain', 'get_agent_usage_summary');
 
 ---
 
-### 6. **Prompt Optimization**
+### 6. **Prompt Optimization (Lyra)**
 
 #### Analyze and optimize a prompt
 ```bash
-npx ultraflow prompt "Generate a React component that handles form validation with error messages"
+npx ultraflow lyra "Generate a React component that handles form validation with error messages" -m detail
 
 # Output:
-# ✓ Prompt Analysis
-# ├─ Clarity: Good (specific outcome expected)
-# ├─ Context: Missing (input/output format not specified)
-# ├─ Scope: Good (focused on one component)
-# └─ Estimated tokens: 150 → 100 (optimized)
+# ✨ Lyra Optimized Prompt:
+# Generate a React component that handles form validation with error messages.
+# 
+# Input: { formFields: Array<{ name: string, type: string, required: boolean }> }
+# Output: <Component /> with real-time validation feedback and error display
+# 
+# Details:
+#   Mode: detail
+#   Platform: generic
+#   Techniques: context-injection, specificity-improvement, scope-definition
+# 
+# 🔧 Improvements:
+#   • Added explicit input/output format
+#   • Clarified component scope and responsibilities
+#   • Specified validation trigger points
 #
-# Recommended:
-# "Generate a React component that handles form validation
-#  with error messages. Input: { formFields: Array<Field> }
-#  Output: <Component /> with validation on blur"
+# 💡 Pro Tips:
+#   • Consider adding accessibility requirements
+#   • Specify error message placement preferences
+```
+
+#### Analyze a prompt without optimizing
+```bash
+npx ultraflow lyra "your prompt here" --analyze
+# Shows: complexity, request type, specificity, completeness, context level, quality gates
+```
+
+#### Generate platform-specific versions
+```bash
+npx ultraflow lyra "your prompt here" --versions
+# Generates optimized versions for: claude, chatgpt, gemini, opencode, codex
 ```
 
 ---
@@ -394,7 +418,7 @@ npx ultraflow init
 Edit `.ultraflow/config.json`:
 ```json
 {
-  "version": "1.2.9",
+  "version": "1.3.1",
   "agent": "claude-code",
   "dashboard": {
     "port": 3001,
@@ -479,16 +503,6 @@ if (contextTokens > threshold * 0.8) {
 }
 ```
 
-#### Manual memory cleanup
-```bash
-npx ultraflow memory clean --older-than 7d
-# Removes memories older than 7 days
-# Keeps checkpoint summaries
-
-npx ultraflow memory compact
-# Compress all memories using semantic dedup
-```
-
 ---
 
 ## Command Reference
@@ -501,7 +515,8 @@ npx ultraflow memory compact
 | `npx ultraflow start dashboard` | Dashboard only | `npx ultraflow start dashboard` |
 | `npx ultraflow status` | Show running services | `npx ultraflow status` |
 | `npx ultraflow stop` | Stop all services | `npx ultraflow stop` |
-| `npx ultraflow prompt <text>` | Optimize a prompt | `npx ultraflow prompt "generate auth"` |
+| `npx ultraflow lyra <text>` | Optimize a prompt with Lyra | `npx ultraflow lyra "generate auth" -m detail` |
+| `npx ultraflow prompt` | Output toolset activation prompt | `npx ultraflow prompt` |
 | `npx ultraflow register` | Register with Ruflo | `npx ultraflow register` |
 | `npx ultraflow ruflo <args>` | Ruflo multi-agent | `npx ultraflow ruflo dispatch --agent opencode` |
 
