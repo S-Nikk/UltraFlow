@@ -1,16 +1,13 @@
 # Ultraflow
 
-Integrated AI toolset for Claude Code, Codex, OpenCode, and OpenClaw.
-
-**Bundles:** Brain memory system + OpenCode delegation + Claude Flow orchestration
+Brain memory system for AI coding agents - works with Claude Code, OpenCode, Codex, and OpenClaw.
 
 ## Features
 
-- **Brain Memory (MCP Server)** - Long-term project memory with vault and session awareness
-- **OpenCode Delegation** - Offload code generation, refactoring, and test writing
-- **Claude Flow Orchestration** - Multi-agent swarm coordination
+- **Brain Memory (MCP Server)** - 17 tools for memory, context, checkpoint, and token tracking
+- **Token Dashboard** - Real-time token cost monitoring on port 3000
 - **Session Hooks** - Auto-load memories, detect context, save progress
-- **Interactive Setup Wizard** - Configure for your AI system in seconds
+- **Agent-Specific Configuration** - Detects your AI agent and provisions accordingly
 
 ## Installation
 
@@ -20,16 +17,31 @@ npm install ultraflow
 
 ## Quick Start
 
-### Initialize Ultraflow
+### Start Everything (Recommended)
+
+```bash
+npx ultraflow start
+```
+
+This starts:
+- Token Dashboard on http://localhost:3000
+- Brain MCP Server (17 tools available)
+
+### Initialize for Your Agent
 
 ```bash
 npx ultraflow init
 ```
 
-Follow the interactive wizard:
-1. Select your AI system(s) (Claude Code, Codex, OpenCode, OpenClaw)
-2. Choose features (Brain memory, OpenCode delegation, Claude Flow)
-3. Auto-generates config files for your selected AI systems
+This detects which AI agent you're using and generates appropriate config files.
+
+### Start Specific Services
+
+```bash
+npx ultraflow start dashboard  # Just the dashboard
+npx ultraflow start brain       # Just the MCP server
+npx ultraflow start all          # Both (default)
+```
 
 ### Check Status
 
@@ -37,232 +49,142 @@ Follow the interactive wizard:
 npx ultraflow status
 ```
 
-Shows which components are installed and available.
+## Token Dashboard
 
-### Start Brain MCP Server
+The dashboard is always available at **http://localhost:3000** regardless of which AI agent you use.
 
-```bash
-npx ultraflow start
-```
+### Changing the Port
 
-Starts the Brain memory system in stdio JSON-RPC mode.
-
-### View Activation Prompt
-
-```bash
-npx ultraflow prompt
-```
-
-Outputs the toolset activation prompt to copy into your AI system prompt.
-
-## Usage Examples
-
-### Using Brain Memory
+Edit the dashboard server:
 
 ```javascript
-// In Claude Code or via MCP
-const memories = await search_memories("polymarket trading strategy");
-const context = await get_memory(memories[0].id);
+// lib/token-dashboard/server.js
+const PORT = process.env.PORT || 3000;  // Change 3000 here
 ```
 
-### Delegating to OpenCode
-
-```javascript
-import { delegateToOpenCode } from 'ultraflow/lib/wrappers/opencode-delegate.js';
-
-const result = await delegateToOpenCode(
-  "Generate a REST API client for Polymarket",
-  { test: true, timeout: 300 }
-);
-```
-
-### Using Claude Flow
+Or via environment variable:
 
 ```bash
-npx @claude-flow/cli swarm-init hierarchical
-npx @claude-flow/cli swarm-add-agent code-generator
-npx @claude-flow/cli memory-store task-context {"status": "in-progress"}
+PORT=3001 npx ultraflow start dashboard
 ```
 
-## CLI Commands
+If you change the port, also update the brain-server's dashboard viewer:
 
-### `npx ultraflow init`
+```javascript
+// lib/brain-server/dashboard-viewer.js
+this.baseUrl = process.env.DASHBOARD_URL || 'http://localhost:3000';
+```
 
-Interactive setup wizard. Generates config files for selected AI systems:
-- `.claude/settings.json` (Claude Code)
-- `AGENTS.md` (Codex)
-- `.opencode/config.yaml` (OpenCode)
-- `.openclaw/ultraflow-manifest.json` (OpenClaw)
+### API Endpoints
 
-### `npx ultraflow start`
+| Endpoint | Description |
+|----------|-------------|
+| `/api/health` | Health check |
+| `/api/summary` | Token cost summary |
+| `/api/tasks` | Task list with costs |
+| `/api/usage` | Usage by model |
+| `/api/turns` | Conversation turns |
+| `/api/pricing` | Pricing tiers |
+| `/api/costs` | Cost tracking |
+| `/api/opportunities` | Optimization |
+| WebSocket | Real-time updates |
 
-Forks Brain MCP server as child process. Server listens on stdio in JSON-RPC mode.
+## MCP Tools (17 Total)
 
-Responds to tools:
-- `search_memories` - Search brain vault
-- `get_memory` - Retrieve specific memory
-- `list_memories` - List all memories
-- `refresh_index` - Update index
-
-### `npx ultraflow status`
-
-Checks installed components:
-- Brain Memory (bundled, always available)
-- Claude Flow CLI (@claude-flow/cli)
-- OpenCode (opencode-ai in PATH)
-
-### `npx ultraflow prompt`
-
-Outputs toolset activation prompt. Designed to be copied into AI system prompts for immediate access to all tools and features.
+| Category | Tools |
+|----------|-------|
+| **Memory** | `search_memories`, `get_memory`, `list_memories`, `refresh_index`, `save_memory` |
+| **Context** | `checkpoint`, `load_context` |
+| **Checkpoint** | `generateCheckpoint`, `loadCheckpoint`, `adjustThreshold` |
+| **Dashboard** | `view_dashboard`, `get_token_summary`, `get_task_list`, `get_optimization_alerts` |
+| **Reporting** | `generate_session_report` |
+| **Agent Logging** | `get_agent_usage_log`, `log_agent_dispatch`, `get_agent_usage_summary` |
 
 ## Configuration
 
-### Brain Memory
+### User Configuration
 
-Default path: `.claude/memory/`
+After running `npx ultraflow init`, config is saved to `.ultraflow/config.json`:
 
-Customize in `.claude/settings.json`:
 ```json
 {
-  "mcpServers": {
-    "brain": {
-      "env": {
-        "BRAIN_MEMORY_PATH": ".claude/memory"
-      }
-    }
+  "version": "1.1.0",
+  "agent": "claude-code",
+  "dashboard": {
+    "port": 3000,
+    "autoStart": true
   }
 }
 ```
 
-### Session Hooks
+### Auto-Detection
 
-Configured in `.claude/settings.json`:
+Ultraflow auto-detects your AI agent from the environment:
 
-```json
-{
-  "hooks": {
-    "SessionStart": "Auto-load relevant memories",
-    "UserPromptSubmit": "Detect context references",
-    "PostToolUse": "Auto-save session context"
-  }
-}
+| Agent | Detected By |
+|-------|------------|
+| Claude Code | `.claude/settings.json` |
+| OpenCode | `.opencode/config.yaml` |
+| Codex | `.codex/config.toml` or `AGENTS.md` |
+| OpenClaw | `.openclaw/manifest.json` |
+
+If multiple agents detected, `npx ultraflow init` asks which to prioritize.
+
+## Architecture
+
+### Two-Level Orchestration
+
+**Package Level (Defaults - Always Optimal)**
+- Auto-detects agent
+- Auto-starts dashboard on port 3000
+- All 17 MCP tools enabled
+- Auto-indexes memories on startup
+- Context threshold: 2000 tokens
+
+**User Level (Optional Override)**
+- Run `npx ultraflow init` to customize
+- Override agent, port, hooks
+
+### File Structure
+
+```
+ultraflow/
+├── lib/
+│   ├── brain-server/     # MCP server (17 tools)
+│   ├── token-dashboard/ # Token tracking (port 3000)
+│   ├── config/          # Defaults, auto-detect, user-config
+│   └── wrappers/        # OpenCode delegation
+├── hooks/               # Per-agent hooks
+├── templates/           # Config templates
+└── bin/                 # CLI
 ```
 
 ## Supported AI Systems
 
-- **Claude Code** - Full integration with settings.json + hooks
-- **Codex** - Agent definitions in AGENTS.md
+- **Claude Code** - Full integration via settings.json + hooks
 - **OpenCode** - Config in .opencode/config.yaml
+- **Codex** - Agent definitions in AGENTS.md
 - **OpenClaw** - Manifest in .openclaw/ultraflow-manifest.json
 
-## Architecture
+## OpenCode Integration
 
-```
-ultraflow/
-├── bin/
-│   ├── ultraflow.js        (CLI entry point)
-│   └── ultraflow-mcp.js    (MCP server binary)
-├── lib/
-│   ├── brain-server/       (Bundled MCP server)
-│   ├── cli/                (Commands & generators)
-│   ├── wrappers/           (OpenCode & Claude Flow)
-│   └── constants.js
-└── templates/              (Handlebars config templates)
-```
-
-## Features Breakdown
-
-### Brain Memory System
-- Tiered vault (conscious + archive)
-- Automatic context detection
-- Session persistence
-- Memory indexing & search
-
-### OpenCode Delegation
-- Code generation
-- Refactoring & optimization
-- Test generation
-- Language-aware execution
-
-### Claude Flow Orchestration
-- Multi-agent swarms
-- Topology templates
-- Shared memory store
-- Agent lifecycle management
-
-## Development
-
-### Build from Source
+Brain-swarm uses OpenCode for memory compression. If OpenCode is not available, Ultraflow attempts to install it automatically:
 
 ```bash
-git clone https://github.com/anthropics/ultraflow
-cd ultraflow
-npm install
-npm test
+npm install -g opencode-ai
 ```
 
-### Create Custom Generators
+## CLI Commands
 
-Extend `lib/cli/generators/` with your own config generator:
+| Command | Description |
+|---------|-------------|
+| `npx ultraflow init` | Initialize for your agent |
+| `npx ultraflow start` | Start dashboard + brain |
+| `npx ultraflow start brain` | Just MCP server |
+| `npx ultraflow start dashboard` | Just token dashboard |
+| `npx ultraflow status` | Show running services |
+| `npx ultraflow stop` | Stop all services |
 
-```javascript
-// my-ai-system-config.js
-export default {
-  async generate(config) {
-    // Read template, render with config, write to file
-    const content = await renderTemplate('my-ai.hbs', config);
-    fs.writeFileSync('MY_AI_CONFIG.json', content);
-  }
-};
-```
+## Version
 
-## Troubleshooting
-
-### Brain server not starting
-
-Ensure `.claude/memory/` exists and is writable:
-```bash
-mkdir -p .claude/memory
-```
-
-### Missing dependencies
-
-Install optional peer dependencies:
-```bash
-npm install @claude-flow/cli opencode-ai
-```
-
-### Config not applying
-
-Verify MCP server entry in `.claude/settings.json`:
-```json
-{
-  "mcpServers": {
-    "brain": {
-      "command": "node",
-      "args": ["path/to/server.js"]
-    }
-  }
-}
-```
-
-## License
-
-MIT
-
-## Support
-
-- **GitHub:** https://github.com/anthropics/ultraflow
-- **Issues:** https://github.com/anthropics/ultraflow/issues
-- **Docs:** https://github.com/anthropics/ultraflow#readme
-
-## Changelog
-
-### v1.0.0 (Initial Release)
-- Brain memory MCP server
-- Interactive CLI setup
-- Config generators for all AI systems
-- OpenCode delegation wrapper
-- Claude Flow orchestration support
-- Session hooks (SessionStart, UserPromptSubmit, PostToolUse)
-- Comprehensive README & activation prompt
+1.1.0

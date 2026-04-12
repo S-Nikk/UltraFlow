@@ -1,7 +1,7 @@
 {
-  "name": "ultraflow",
-  "version": "1.0.0",
-  "description": "Integrated AI toolset: Brain memory + OpenCode delegation + Claude Flow orchestration for Claude Code, Codex, OpenCode, OpenClaw",
+  "name": "@s-nikk/ultraflow",
+  "version": "1.2.2",
+  "description": "Brain memory system for AI coding agents - memory, context, checkpoint, token tracking, prompt optimization. Works with Claude Code, OpenCode, Codex, OpenClaw.",
   "type": "module",
   "main": "lib/index.js",
   "bin": {
@@ -15,10 +15,11 @@
     "commander": "^11.0.0",
     "inquirer": "^8.2.5",
     "handlebars": "^4.7.7",
-    "chalk": "^4.1.2"
+    "chalk": "^4.1.2",
+    "express": "^4.18.2",
+    "ws": "^8.14.2"
   },
   "peerDependencies": {
-    "@claude-flow/cli": "^3.5.0",
     "opencode-ai": "^1.3.0"
   },
   "peerDependenciesOptional": true,
@@ -29,22 +30,25 @@
     "opencode",
     "claude-code",
     "codex",
-    "ai-orchestration",
-    "claude-flow"
+    "openclaw",
+    "token-dashboard",
+    "context",
+    "lyra",
+    "ruflo",
+    "prompt-optimization"
   ],
   "scripts": {
-    "start": "node bin/ultraflow.js",
-    "test": "jest",
-    "lint": "eslint lib bin"
+    "postinstall": "node bin/postinstall.js",
+    "preinstall": "node bin/preinstall.js",
+    "start": "node bin/ultraflow.js start",
+    "init": "node bin/ultraflow.js init",
+    "status": "node bin/ultraflow.js status",
+    "register": "node bin/ultraflow.js register",
+    "mcp": "node bin/ultraflow-mcp.js"
   },
-  "author": "Anthropic",
+  "author": "S-Nikk",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/anthropics/ultraflow"
-  },
-  "homepage": "https://github.com/anthropics/ultraflow#readme",
-  "bugs": {
-    "url": "https://github.com/anthropics/ultraflow/issues"
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }

@@ -1,0 +1,63 @@
+{
+  "session_id": "2026-04-12T03:00Z-abc123",
+  "start_time": "2026-04-12T03:00:00Z",
+  "budget": 1200,
+  "total_tokens": 197500,
+  "total_cost": 1.0835,
+  "tasks": [
+    {
+      "id": "task-1",
+      "name": "Cleanup",
+      "model": "Haiku",
+      "tokens_in": 18000,
+      "tokens_out": 5000,
+      "timestamp": "2026-04-12T03:15:00Z",
+      "status": "complete"
+    },
+    {
+      "id": "task-2",
+      "name": "DreamLord",
+      "model": "Haiku",
+      "tokens_in": 50000,
+      "tokens_out": 12000,
+      "timestamp": "2026-04-12T03:20:00Z",
+      "status": "complete"
+    },
+    {
+      "id": "task-3",
+      "name": "GitNexus",
+      "model": "Sonnet",
+      "tokens_in": 28000,
+      "tokens_out": 8000,
+      "timestamp": "2026-04-12T03:30:00Z",
+      "status": "complete"
+    },
+    {
+      "id": "task-4",
+      "name": "Context Management",
+      "model": "Sonnet",
+      "tokens_in": 35000,
+      "tokens_out": 10000,
+      "timestamp": "2026-04-12T03:40:00Z",
+      "status": "complete"
+    },
+    {
+      "id": "task-5",
+      "name": "Orchestration",
+      "model": "Opus",
+      "tokens_in": 24000,
+      "tokens_out": 6000,
+      "timestamp": "2026-04-12T03:45:00Z",
+      "status": "complete"
+    },
+    {
+      "id": "task-1775950718408",
+      "name": "test-task",
+      "tokens_in": 1000,
+      "tokens_out": 500,
+      "model": "Haiku",
+      "status": "complete",
+      "timestamp": "2026-04-11T23:38:38.408Z"
+    }
+  ]
+}

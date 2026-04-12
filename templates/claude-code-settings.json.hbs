@@ -1,46 +1,29 @@
 {
-  "type": "module",
   "mcpServers": {
-    "brain": {
+    "ultraflow-brain": {
       "command": "node",
-      "args": [
-        "{{brainServerPath}}"
-      ],
+      "args": ["{{ultraflowPath}}/lib/brain-server/server.js"],
       "env": {
         "BRAIN_MEMORY_PATH": ".claude/memory",
-        "NODE_ENV": "production"
+        "DASHBOARD_URL": "http://localhost:3000"
       }
-    }{{#if (includes features 'Claude Flow orchestration')}},
-    "claude-flow": {
-      "command": "npx",
-      "args": [
-        "@claude-flow/cli@latest",
-        "mcp"
-      ]
-    }{{/if}}
+    }
   },
   "hooks": {
     "SessionStart": {
       "command": "node",
-      "args": [
-        "{{sessionInitPath}}"
-      ],
-      "description": "Auto-load relevant memories at session start"
+      "args": ["{{ultraflowPath}}/hooks/claude-code/SessionStart.js"],
+      "description": "Auto-load context and start dashboard"
     },
-    "UserPromptSubmit": {
+    "SessionEnd": {
       "command": "node",
-      "args": [
-        "{{detectContextPath}}",
-        "{{{userPrompt}}}"
-      ],
-      "description": "Detect context references and suggest memories"
+      "args": ["{{ultraflowPath}}/hooks/claude-code/SessionEnd.js"],
+      "description": "Save checkpoint and cleanup"
     },
     "PostToolUse": {
       "command": "node",
-      "args": [
-        "{{autoSaveContextPath}}"
-      ],
-      "description": "Auto-save session context to brain vault"
+      "args": ["{{ultraflowPath}}/hooks/claude-code/PostToolUse.js"],
+      "description": "Log agent usage"
     }
   }
 }

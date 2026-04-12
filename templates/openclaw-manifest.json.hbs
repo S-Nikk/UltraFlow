@@ -1,63 +1,72 @@
 {
   "name": "Ultraflow Integration",
-  "version": "1.0.0",
-  "description": "Integrated AI toolset: Brain memory + OpenCode delegation + Claude Flow orchestration",
+  "version": "1.1.0",
+  "description": "Brain memory system for AI coding agents - memory, context, checkpoint, token tracking",
   "type": "integration",
   "manifest_version": "1.0",
-  "
-components": {
+  "components": {
     "brain": {
       "type": "mcp-server",
       "enabled": true,
-      "description": "Brain memory system with vault",
+      "description": "Brain memory system with vault, context, and checkpoints",
+      "path": "node_modules/ultraflow/lib/brain-server/server.js",
       "tools": [
         "search_memories",
         "get_memory",
         "list_memories",
-        "refresh_index"
+        "refresh_index",
+        "save_memory",
+        "checkpoint",
+        "load_context",
+        "generateCheckpoint",
+        "loadCheckpoint",
+        "adjustThreshold",
+        "view_dashboard",
+        "get_token_summary",
+        "get_task_list",
+        "get_optimization_alerts",
+        "generate_session_report",
+        "get_agent_usage_log",
+        "log_agent_dispatch",
+        "get_agent_usage_summary"
       ]
     },
-    "opencode": {
-      "type": "delegation",
-      "enabled": {{#if (includes features 'OpenCode delegation')}}true{{else}}false{{/if}},
-      "description": "Code generation and refactoring delegation",
-      "capabilities": [
-        "code-generation",
-        "refactoring",
-        "test-writing",
-        "optimization"
-      ]
-    },
-    "claude-flow": {
-      "type": "orchestration",
-      "enabled": {{#if (includes features 'Claude Flow orchestration')}}true{{else}}false{{/if}},
-      "description": "Multi-agent orchestration framework",
-      "tools": [
-        "swarm-init",
-        "swarm-add-agent",
-        "memory-store"
+    "token-dashboard": {
+      "type": "service",
+      "enabled": true,
+      "description": "Real-time token cost monitoring dashboard",
+      "port": 3000,
+      "auto_start": true,
+      "endpoints": [
+        "/api/health",
+        "/api/summary",
+        "/api/tasks",
+        "/api/usage",
+        "/api/turns",
+        "/api/pricing",
+        "/api/costs",
+        "/api/opportunities"
       ]
     }
   },
   "hooks": {
     "session_start": true,
-    "user_prompt_submit": true,
+    "session_end": true,
     "post_tool_use": true
   },
   "configuration": {
     "memory_path": ".claude/memory",
-    "config_path": ".openclaw",
+    "config_path": ".ultraflow",
+    "dashboard_url": "http://localhost:3000",
     "auto_save": true,
-    "cache_ttl": 3600
+    "cache_ttl": 3600,
+    "context_threshold": 2000,
+    "max_conscious_tokens": 3000
   },
   "supported_ais": [
-    {{#each aiSystems}}
-    "{{this}}"{{#unless @last}},{{/unless}}
-    {{/each}}
-  ],
-  "enabled_features": [
-    {{#each features}}
-    "{{this}}"{{#unless @last}},{{/unless}}
-    {{/each}}
+    "claude-code",
+    "opencode",
+    "codex",
+    "openclaw"
   ]
 }
