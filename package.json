@@ -1,6 +1,6 @@
 {
   "name": "@s-nikk/ultraflow",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Brain memory system for AI coding agents - memory, context, checkpoint, token tracking, prompt optimization. Works with Claude Code, OpenCode, Codex, OpenClaw.",
   "type": "module",
   "main": "lib/index.js",
