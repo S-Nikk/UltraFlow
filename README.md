@@ -22,6 +22,15 @@ Ultraflow is your AI agent's **nervous system**—a persistent memory layer that
 | Persistent storage | Token tracking | Cost optimization | Clarity analysis | Parallel execution |
 | Memory clustering | Budget alerts | Auto task routing | Optimization tips | Agent logging |
 
+### Integrated Tools
+
+| 📊 **Graphify** | 💾 **MemPalace** | 🔗 **GitNexus** |
+|:---|:---|:---|
+| Knowledge graphs | Local AI memory | Code intelligence |
+| 25+ languages | 29 MCP tools | Execution flows |
+| Relationship mapping | Semantic search | Impact analysis |
+| Auto-analysis | Auto-indexing | Refactoring safety |
+
 ### In 30 Seconds
 
 ```bash
@@ -37,7 +46,9 @@ npx ultraflow start
 # Dashboard appears at http://localhost:3000
 ```
 
-**That's it.** Memory, token tracking, OpenCode delegation, and 18 MCP tools are now available.
+**That's it!** Memory, token tracking, OpenCode delegation, and 18 MCP tools are now available.
+
+**Next Step:** Ask your coding agent to set up and wire Ultraflow. It will auto-detect the running server and integrate all 18 MCP tools into your workflow. No manual configuration needed—your agent will handle it.
 
 ---
 
@@ -322,9 +333,9 @@ npx ultraflow status
 
 ---
 
-## 📚 MCP Tools (18 Total)
+## 📚 MCP Tools (58+ Total)
 
-### 🧠 Memory Tools (5)
+### 🧠 Brain Memory Tools (5)
 - `search_memories` — Find by keyword or concept
 - `get_memory` — Retrieve full content
 - `list_memories` — Index all saved memories
@@ -351,6 +362,29 @@ npx ultraflow status
 - `get_agent_usage_log` — All dispatches with timestamps
 - `log_agent_dispatch` — Log a single dispatch
 - `get_agent_usage_summary` — Usage by model
+
+### 📊 Graphify Tools (6+)
+- `graph_query` — Search concepts in knowledge graph
+- `graph_context` — Get 360° view of a concept
+- `graph_communities` — Find clusters and god nodes
+- `graph_analyze` — Trigger graph analysis
+- *Plus: graph export, temporal queries, relationship mapping*
+
+### 💾 MemPalace Tools (29)
+- `search_memory` — Semantic search across sessions
+- `add_memory` — Save findings and discoveries
+- `recall_context` — Load by wing/room/date
+- `wake_up` — Auto-load session context
+- `create_wing` — Organize by project
+- `create_room` — Organize by topic
+- *Plus: 23 more tools for retrieval, indexing, exports, knowledge graphs*
+
+### 🔗 GitNexus Tools (via Ultraflow)
+- `gitnexus_query` — Find code by concept
+- `gitnexus_context` — Full symbol relationships
+- `gitnexus_impact` — Blast radius analysis
+- `gitnexus_rename` — Safe refactoring
+- `gitnexus_detect_changes` — Pre-commit verification
 
 ---
 
@@ -427,6 +461,86 @@ ws.on('message', (msg) => {
 
 ---
 
+---
+
+## 🔧 Integrated Power Tools
+
+### 📊 Graphify: Knowledge Graphs for Code
+
+Transform your codebase into queryable knowledge graphs with automatic relationship discovery:
+
+```bash
+# Auto-analyze codebase and generate graph
+npx graphify analyze
+
+# Query for concepts and relationships
+npx graphify query "authentication flow"
+npx graphify context "UserService" --depth 2
+
+# Interactive explorer
+npx graphify serve  # http://localhost:3000
+```
+
+**Features:**
+- 25+ languages via tree-sitter AST
+- Multimodal: code, docs, PDFs, images, video/audio
+- Automatic analysis after git commits
+- 29 EXTRACTED/INFERRED relationships with confidence scores
+- 71.5x fewer tokens per query vs raw files
+
+**Learn more:** `.claude/skills/graphify/*/SKILL.md`
+
+---
+
+### 💾 MemPalace: Persistent Conversation Memory
+
+Store and retrieve conversation history locally with semantic search:
+
+```bash
+# Auto-loads on session start
+mempalace wake-up
+
+# Search across all sessions
+mempalace search "performance optimization"
+
+# Organize by project/topic
+mempalace add "Implemented Redis caching" --wing MyProject --room Performance
+```
+
+**Features:**
+- 29 MCP tools for full integration
+- 96.6% R@5 retrieval accuracy (zero API calls)
+- Hierarchical memory: Wings (projects) → Rooms (topics) → Drawers (content)
+- Semantic search understands meaning, not just keywords
+- Auto-indexes sessions for next-time context loading
+
+**Learn more:** `.claude/skills/mempalace/*/SKILL.md`
+
+---
+
+### 🔗 GitNexus: Code Intelligence
+
+Understand code relationships, assess impact before changes:
+
+```bash
+# Impact analysis before editing
+npx gitnexus impact --target "UserService" --direction upstream
+
+# Find execution flows
+npx gitnexus query "authentication flow"
+
+# Safe refactoring
+npx gitnexus rename --symbol "oldName" --new-name "newName" --dry-run
+```
+
+**Features:**
+- Execution flow analysis
+- Impact radius before changes
+- Safe multi-file refactoring
+- Pre-commit verification
+
+---
+
 ## 🚀 Advanced Usage
 
 <details>
@@ -489,22 +603,25 @@ await brain.adjustThreshold({
 ## 📊 Architecture
 
 ```
-┌──────────────────────────────────────────────────┐
-│  Your AI Agent (Claude Code/OpenCode/Codex)     │
-│         ↓ (MCP Server)                           │
-├──────────────────────────────────────────────────┤
-│  Ultraflow Core                                  │
-│  ├─ Brain (semantic memory + search)             │
-│  ├─ DreamLord (context + checkpoints + costs)    │
-│  ├─ Lyra (prompt optimization)                   │
-│  ├─ Ruflo (multi-agent orchestration)            │
-│  └─ GitNexus (code intelligence analysis)        │
-├──────────────────────────────────────────────────┤
-│  ↓               ↓                ↓              │
-│ Memory DB    Dashboard (3000)  GitNexus Index    │
-│ (.claude/)   (token tracking)  (code graph)      │
-│             (optimization)                       │
-└──────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│  Your AI Agent (Claude Code/OpenCode/Codex/OpenClaw)        │
+│         ↓ (MCP Server)                                        │
+├──────────────────────────────────────────────────────────────┤
+│  Ultraflow Core                                              │
+│  ├─ Brain (semantic memory + search)                         │
+│  ├─ DreamLord (context + checkpoints + costs)                │
+│  ├─ Lyra (prompt optimization)                               │
+│  ├─ Ruflo (multi-agent orchestration)                        │
+│  ├─ GitNexus (code intelligence)                             │
+│  ├─ Graphify (knowledge graphs)                              │
+│  └─ MemPalace (conversation memory)                          │
+├──────────────────────────────────────────────────────────────┤
+│  ↓              ↓                ↓              ↓             │
+│ Memory DB   Dashboard (3000)  Code Index    Memory Graph     │
+│ (.claude/)  (token tracking)  (GitNexus)    (Graphify)       │
+│             (optimization)                  + Conversation DB│
+│                                             (MemPalace)      │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 ---
