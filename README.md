@@ -34,14 +34,17 @@ Ultraflow is your AI agent's **nervous system**—a persistent memory layer that
 ### In 30 Seconds
 
 ```bash
-# Install
+# Install globally
+npm install -g @s-nikk/ultraflow
+
+# Or install locally
 npm install @s-nikk/ultraflow
 
 # Initialize (auto-detects your agent)
-npx ultraflow init
+ultraflow init
 
 # Start everything
-npx ultraflow start
+ultraflow start
 
 # Dashboard appears at http://localhost:3000
 ```
@@ -660,7 +663,7 @@ MIT © S-Nikk
 
 **Get started in 30 seconds:**
 ```bash
-npm install ultraflow && npx ultraflow init && npx ultraflow start
+npm install -g @s-nikk/ultraflow && ultraflow init && ultraflow start
 ```
 
 ---
